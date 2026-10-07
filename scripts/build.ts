@@ -45,10 +45,29 @@ function workspaceVersion() {
 }
 
 // Skill packs: Markdown skills from other repositories, installed by extracting an archive of a pinned ref.
-const packs = JSON.parse(readFileSync(join(root, "packs.json"), "utf8")).packs.map((pack: Record<string, unknown>) => {
+// Each pack's skills are read from the repository so the install sheet can offer them one by one.
+async function packSkills(owner: string, name: string, ref: string, subdirs: string[]) {
+  const tree = (await (await fetch(`https://api.github.com/repos/${owner}/${name}/git/trees/${ref}?recursive=1`)).json()) as { tree: { path: string }[] }
+  const inside = (file: string) => !subdirs.length || subdirs.some((sub) => file.startsWith(sub.replace(/\/$/, "") + "/"))
+  const files = tree.tree.map((entry) => entry.path).filter((file) => file.endsWith("/SKILL.md") && inside(file)).sort()
+  const skills = []
+  for (const file of files) {
+    const text = await (await fetch(`https://raw.githubusercontent.com/${owner}/${name}/${ref}/${file}`)).text()
+    const front = text.startsWith("---") ? text.slice(3, text.indexOf("\n---", 3)) : ""
+    const line = front.split("\n").find((item) => item.trim().startsWith("description:")) ?? ""
+    const description = line.replace(/^\s*description:\s*/, "").replace(/^["']|["']$/g, "").trim().slice(0, 200)
+    skills.push({ name: file.split("/").at(-2), description })
+  }
+  return skills
+}
+
+const packs = []
+for (const pack of JSON.parse(readFileSync(join(root, "packs.json"), "utf8")).packs as Record<string, unknown>[]) {
   const repo = String(pack.repo).replace(/\/$/, "")
   const [owner, name] = repo.replace("https://github.com/", "").split("/")
-  return {
+  const subdirs = (pack.subdirs as string[] | undefined) ?? []
+  // A "skill" entry is one skill on its own; a "skills" entry is a pack of them. Either installs the same way.
+  packs.push({
     kind: "skills",
     category: "skills",
     hooks: [],
@@ -56,10 +75,11 @@ const packs = JSON.parse(readFileSync(join(root, "packs.json"), "utf8")).packs.m
     version: String(pack.ref),
     source: repo,
     archive: `https://codeload.github.com/${owner}/${name}/tar.gz/${pack.ref}`,
+    skills: await packSkills(owner!, name!, String(pack.ref), subdirs),
     ...pack,
-  }
-})
+  })
+}
 
 const registry = { version: 1, wit: "drift:plugin@0.2.0", plugins: [...plugins.map((plugin) => ({ kind: "wasm", ...plugin })), ...packs] }
 await Bun.write(join(root, "registry.json"), JSON.stringify(registry, null, 2) + "\n")
-console.log(`registry.json: ${plugins.length} plugins`)
+console.log(`registry.json: ${plugins.length} plugins, ${packs.length} skill entries`)

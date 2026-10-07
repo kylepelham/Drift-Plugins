@@ -32,6 +32,7 @@
     },
     {
       "id": "karpathy-guidelines",
+      "kind": "skill",
       "name": "Karpathy Guidelines",
       "description": "A short set of coding guidelines from Andrej Karpathy's observations about common LLM coding mistakes, applied quietly: surface assumptions instead of guessing, the minimum code that solves the problem, surgical changes that leave adjacent code alone, and a definition of done to verify against.",
       "author": "forrestchang",
@@ -42,6 +43,7 @@
     },
     {
       "id": "sqlserver-query-plans",
+      "kind": "skill",
       "name": "SQL Server Query Plans",
       "description": "Reads SQL Server execution plans the way an experienced tuner would, from Erik Darling's own query tuning knowledge: what is actually slow and why, not which operators look expensive. Point the agent at a .sqlplan or .xml file and ask what is wrong.",
       "author": "Erik Darling",

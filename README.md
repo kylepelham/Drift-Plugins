@@ -27,7 +27,8 @@ downloads the component from `dist/`, checking its hash.
 `packs.json` lists Markdown skill collections from other repositories (Superpowers, Skills for Real
 Engineers, Agent Skills, Karpathy Guidelines, SQL Server Query Plans). Drift installs one by
 unpacking the pinned ref's archive into `~/.config/drift/skills/<id>`, where it reads skills from
-already; a pack runs no code. They appear in the registry with `kind: "skills"`.
+already; a pack runs no code. A single skill is an entry with `kind: "skill"`, a collection `kind: "skills"`; both install the
+same way, and Drift lets you pick which of a pack's skills to take.
 
 Every plugin's config is in its `plugin.json`; Drift's install sheet offers the same fields and
 writes them to your `~/.config/drift/drift.json` entry.
