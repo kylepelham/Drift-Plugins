@@ -7,6 +7,7 @@
   "hooks": ["before-tool", "after-tool", "turn-end", "compaction"],
   "config": [
     { "key": "test", "label": "Test command", "type": "list", "default": ["cargo", "test"], "description": "Program and arguments, run in the workspace when a reply says @guard test." },
+    { "key": "timeoutMs", "label": "Time limit (ms)", "type": "number", "default": 300000, "description": "The test run is stopped past this." },
     { "key": "deny", "label": "Refused commands", "type": "list", "default": ["git push --force", "git push -f", "git reset --hard", "git clean -f", "git checkout --", "git branch -D"], "description": "A shell line containing any of these is refused." }
   ]
 }

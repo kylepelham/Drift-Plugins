@@ -12,7 +12,7 @@ struct Guard;
 
 const DEFAULT_DENY: &[&str] = &["git push --force", "git push -f", "git reset --hard", "git clean -f", "git checkout --", "git branch -D"];
 const TRIGGER: &str = "@guard test";
-const TEST_TIMEOUT_MS: u32 = 60_000;
+const TEST_TIMEOUT_MS: u32 = 300_000;
 
 fn settings() -> Value {
     serde_json::from_str(&config()).unwrap_or(Value::Null)
@@ -61,7 +61,8 @@ impl Guest for Guard {
             log(Level::Warn, "no test command configured; set config.test to a program and its arguments");
             return TurnEnd::Accept;
         };
-        match run(program, args, TEST_TIMEOUT_MS) {
+        let timeout = settings()["timeoutMs"].as_u64().map(|ms| ms as u32).unwrap_or(TEST_TIMEOUT_MS);
+        match run(program, args, timeout) {
             Ok(output) if output.code == 0 => TurnEnd::Note("tests passed".into()),
             Ok(output) => {
                 show("Tests failed", &format!("exit code {}; the agent is fixing them", output.code), Tone::Warning);

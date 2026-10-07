@@ -138,6 +138,13 @@
           "description": "Program and arguments, run in the workspace when a reply says @guard test."
         },
         {
+          "key": "timeoutMs",
+          "label": "Time limit (ms)",
+          "type": "number",
+          "default": 300000,
+          "description": "The test run is stopped past this."
+        },
+        {
           "key": "deny",
           "label": "Refused commands",
           "type": "list",
@@ -157,8 +164,8 @@
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/guard",
       "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/guard/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/guard.wasm",
-      "sha256": "d1194ab4e5c9aa76a030ff4dd3b84774b3d87e924b2f4acb6b6d33a3adbc4414",
-      "size": 80619
+      "sha256": "56f7922ec136b11788176828a3887e9563d7f1329845cea73cb132011fb3a34c",
+      "size": 80734
     },
     {
       "id": "lint-check",
