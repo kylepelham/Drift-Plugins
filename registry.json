@@ -45,6 +45,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/auto-format",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/auto-format/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/auto-format.wasm",
       "sha256": "0c3378f2a318527aaaea89302de47242d6a6e6757b2cd263c631fd027b25977d",
       "size": 106756
@@ -77,6 +78,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/git-autocommit",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/git-autocommit/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/git-autocommit.wasm",
       "sha256": "6b7b995c8311bc040c7b08e4212f249b131b5f899c7b5fa16157722948b05b80",
       "size": 78466
@@ -107,6 +109,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/git-context",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/git-context/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/git-context.wasm",
       "sha256": "39aaf8e840db36278a877fdcced9cb5638048f0d48b68f2ad92ee8d965fe5c56",
       "size": 75520
@@ -152,6 +155,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/guard",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/guard/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/guard.wasm",
       "sha256": "d1194ab4e5c9aa76a030ff4dd3b84774b3d87e924b2f4acb6b6d33a3adbc4414",
       "size": 80619
@@ -223,6 +227,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/lint-check",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/lint-check/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/lint-check.wasm",
       "sha256": "13426d6f4420de66816ad0bb0b12c018d36faa661d9f58044308bcefd8961a4e",
       "size": 112680
@@ -268,6 +273,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/notify",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/notify/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/notify.wasm",
       "sha256": "a56a37234edd39f031a3c7315fa1a77327b1755d460dc2d977f112e89dec036a",
       "size": 102653
@@ -310,6 +316,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/protect-files",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/protect-files/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/protect-files.wasm",
       "sha256": "65adc4b438a3b5ff167e3b1ecb8f4aee6fa2e874e3c1061ed06d1ef7a3134a4e",
       "size": 84274
@@ -347,6 +354,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/test-gate",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/test-gate/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/test-gate.wasm",
       "sha256": "ed6aee698d6a7fa144195188c6b46a3915e8a76697d75f8eae37a2b484abd722",
       "size": 78175
@@ -379,6 +387,7 @@
       "version": "0.1.0",
       "author": "Drift",
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/tool-log",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/tool-log/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/tool-log.wasm",
       "sha256": "2e07967465db2b892a93e57572aa5705a50f8c8706175989e02d076b4fe13a00",
       "size": 104049

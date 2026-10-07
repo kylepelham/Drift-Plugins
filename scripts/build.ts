@@ -7,6 +7,8 @@ import { spawnSync } from "node:child_process"
 
 const root = join(import.meta.dir, "..")
 const base = "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main"
+// raw.githubusercontent.com serves SVG as text, so images come through jsDelivr, which serves them as images.
+const images = "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main"
 
 if (!process.argv.includes("--no-build")) {
   const built = spawnSync("cargo", ["build", "--release", "--target", "wasm32-wasip2"], { cwd: root, stdio: "inherit" })
@@ -30,6 +32,7 @@ for (const id of readdirSync(join(root, "plugins")).sort()) {
     version,
     author: "Drift",
     source: `https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/${id}`,
+    image: existsSync(join(root, "plugins", id, "icon.svg")) ? `${images}/plugins/${id}/icon.svg` : undefined,
     download: `${base}/dist/${id}.wasm`,
     sha256: createHash("sha256").update(bytes).digest("hex"),
     size: bytes.length,
