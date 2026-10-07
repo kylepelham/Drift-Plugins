@@ -55,6 +55,19 @@ fn glob(pattern: &str, text: &str) -> bool {
     walk(&p, &t)
 }
 
+/// Commands and redirections that change files; a line that only reads a protected file is fine.
+const WRITERS: &[&str] = &["rm", "mv", "cp", "tee", "truncate", "dd", "chmod", "chown", "ln", "touch", "install", "unlink", "shred", "sed", "perl", "python", "node", "bun", "git"];
+
+fn writes(command: &str) -> bool {
+    if command.contains('>') {
+        return true;
+    }
+    command
+        .split(|ch: char| ch.is_whitespace() || matches!(ch, '|' | ';' | '&' | '(' | ')'))
+        .filter(|word| !word.is_empty())
+        .any(|word| WRITERS.contains(&word.rsplit(['/', '\\']).next().unwrap_or(word)))
+}
+
 fn protected_in(text: &str, patterns: &[String]) -> Option<String> {
     text.split(|ch: char| ch.is_whitespace() || matches!(ch, '"' | '\'' | '>' | '<' | '|' | ';' | '&' | '(' | ')'))
         .filter(|word| !word.is_empty() && !word.starts_with('-'))
@@ -80,8 +93,8 @@ impl Guest for Protect {
         }
         if call.tool == "bash" {
             let command = input["command"].as_str().unwrap_or_default();
-            if let Some(path) = protected_in(command, &patterns) {
-                return BeforeTool::Deny(format!("{path} is protected; a shell line may not touch it"));
+            if let Some(path) = protected_in(command, &patterns).filter(|_| writes(command)) {
+                return BeforeTool::Deny(format!("{path} is protected; a shell line may read it but not change it"));
             }
         }
         BeforeTool::Allow

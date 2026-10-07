@@ -3,6 +3,7 @@
   "wit": "drift:plugin@0.2.0",
   "plugins": [
     {
+      "kind": "wasm",
       "id": "auto-format",
       "name": "Auto-format",
       "description": "Runs a formatter over every file the agent writes, chosen by extension: prettier, rustfmt, black and gofmt out of the box, or your own commands. The card says which files were formatted.",
@@ -51,6 +52,7 @@
       "size": 106756
     },
     {
+      "kind": "wasm",
       "id": "git-autocommit",
       "name": "Git auto-commit",
       "description": "Commits after every file the agent writes, so each change is its own revertible step and nothing is lost if a turn goes wrong. Only the written files are staged unless you choose to stage everything.",
@@ -84,6 +86,7 @@
       "size": 78466
     },
     {
+      "kind": "wasm",
       "id": "git-context",
       "name": "Git context",
       "description": "Puts the repository's state beside each prompt: the branch, which files are changed, and the last five commits, so the model knows where it is without running git first.",
@@ -115,6 +118,7 @@
       "size": 75520
     },
     {
+      "kind": "wasm",
       "id": "guard",
       "name": "Guard",
       "description": "Refuses shell commands that rewrite history (force pushes, hard resets, clean), notes failed commands under their output, and runs your tests when a reply ends with @guard test, keeping the turn going until they pass.",
@@ -168,6 +172,7 @@
       "size": 80734
     },
     {
+      "kind": "wasm",
       "id": "lint-check",
       "name": "Lint check",
       "description": "Runs a type checker or linter after the agent writes a matching file and puts the problems in front of the model with the tool's output, so it fixes them in the same turn instead of leaving them for you.",
@@ -240,6 +245,7 @@
       "size": 112680
     },
     {
+      "kind": "wasm",
       "id": "notify",
       "name": "Notify",
       "description": "Tells you when Drift needs you or has finished: a notice in the app when a call waits for your approval, and optionally a webhook (Slack, Discord, anything that takes JSON) when a turn ends, so you hear about it away from the screen.",
@@ -286,9 +292,10 @@
       "size": 102653
     },
     {
+      "kind": "wasm",
       "id": "protect-files",
       "name": "Protect files",
-      "description": "Keeps the agent out of files a person should edit: .env and other secrets, keys and certificates, lockfiles, and the .git directory. Edits, writes, patches and shell lines that name a protected path are refused with the reason.",
+      "description": "Keeps the agent out of files a person should edit: .env and other secrets, keys and certificates, lockfiles, and the .git directory. Edits, writes and patches to a protected path are refused with the reason, and so is a shell line that would change one (a redirection, rm, mv, sed, git and the like); reading it is fine.",
       "category": "safety",
       "icon": "lock",
       "hooks": [
@@ -325,10 +332,11 @@
       "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/protect-files",
       "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/protect-files/icon.svg",
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/protect-files.wasm",
-      "sha256": "65adc4b438a3b5ff167e3b1ecb8f4aee6fa2e874e3c1061ed06d1ef7a3134a4e",
-      "size": 84274
+      "sha256": "97bf07f069086cdd51db9a70ae6f4a3e2baed5101342246834fb08210c0ad0c6",
+      "size": 85805
     },
     {
+      "kind": "wasm",
       "id": "test-gate",
       "name": "Test gate",
       "description": "Runs your test suite before any turn that changed files is allowed to end. Failures go back to the model as a prompt and it keeps working until they pass; a passing run leaves a line under the reply.",
@@ -367,6 +375,7 @@
       "size": 78175
     },
     {
+      "kind": "wasm",
       "id": "tool-log",
       "name": "Tool log",
       "description": "Keeps a record of every tool call the agent makes: one JSON line per call in a file under the workspace, bounded so it never grows without limit, and optionally posted to an endpoint of yours.",
@@ -398,6 +407,103 @@
       "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/tool-log.wasm",
       "sha256": "2e07967465db2b892a93e57572aa5705a50f8c8706175989e02d076b4fe13a00",
       "size": 104049
+    },
+    {
+      "kind": "skills",
+      "category": "skills",
+      "hooks": [],
+      "config": [],
+      "version": "main",
+      "source": "https://github.com/obra/superpowers",
+      "archive": "https://codeload.github.com/obra/superpowers/tar.gz/main",
+      "id": "superpowers",
+      "name": "Superpowers",
+      "description": "A structured development workflow: brainstorm the problem first, write a plan, then execute it step by step with test-driven development, systematic debugging and verification before anything is called done. Skills trigger when relevant, so you rarely call them by name.",
+      "author": "Jesse Vincent (obra)",
+      "repo": "https://github.com/obra/superpowers",
+      "ref": "main",
+      "subdirs": [
+        "skills"
+      ],
+      "image": "https://avatars.githubusercontent.com/u/45416?s=128"
+    },
+    {
+      "kind": "skills",
+      "category": "skills",
+      "hooks": [],
+      "config": [],
+      "version": "main",
+      "source": "https://github.com/mattpocock/skills",
+      "archive": "https://codeload.github.com/mattpocock/skills/tar.gz/main",
+      "id": "mattpocock-skills",
+      "name": "Skills for Real Engineers",
+      "description": "Matt Pocock's small, focused skills for disciplined engineering with AI: grill-me interviews you one question at a time until an idea is fully thought through, to-spec, to-tickets and implement turn it into work, plus code review, TDD, diagnosing bugs, PRs and more.",
+      "author": "Matt Pocock",
+      "repo": "https://github.com/mattpocock/skills",
+      "ref": "main",
+      "subdirs": [
+        "skills/engineering",
+        "skills/productivity",
+        "skills/misc"
+      ],
+      "image": "https://avatars.githubusercontent.com/u/28293365?s=128"
+    },
+    {
+      "kind": "skills",
+      "category": "skills",
+      "hooks": [],
+      "config": [],
+      "version": "main",
+      "source": "https://github.com/addyosmani/agent-skills",
+      "archive": "https://codeload.github.com/addyosmani/agent-skills/tar.gz/main",
+      "id": "agent-skills",
+      "name": "Agent Skills",
+      "description": "Addy Osmani's full software lifecycle in skill form: spec, plan, build incrementally, test, review on five axes, simplify, and ship, with context engineering, security hardening, debugging and documentation along the way.",
+      "author": "Addy Osmani",
+      "repo": "https://github.com/addyosmani/agent-skills",
+      "ref": "main",
+      "subdirs": [
+        "skills"
+      ],
+      "image": "https://avatars.githubusercontent.com/u/110953?s=128"
+    },
+    {
+      "kind": "skills",
+      "category": "skills",
+      "hooks": [],
+      "config": [],
+      "version": "main",
+      "source": "https://github.com/forrestchang/andrej-karpathy-skills",
+      "archive": "https://codeload.github.com/forrestchang/andrej-karpathy-skills/tar.gz/main",
+      "id": "karpathy-guidelines",
+      "name": "Karpathy Guidelines",
+      "description": "A short set of coding guidelines from Andrej Karpathy's observations about common LLM coding mistakes, applied quietly: surface assumptions instead of guessing, the minimum code that solves the problem, surgical changes that leave adjacent code alone, and a definition of done to verify against.",
+      "author": "forrestchang",
+      "repo": "https://github.com/forrestchang/andrej-karpathy-skills",
+      "ref": "main",
+      "subdirs": [
+        "skills"
+      ],
+      "image": "https://avatars.githubusercontent.com/u/7857126?s=128"
+    },
+    {
+      "kind": "skills",
+      "category": "skills",
+      "hooks": [],
+      "config": [],
+      "version": "main",
+      "source": "https://github.com/erikdarlingdata/claude-plugins",
+      "archive": "https://codeload.github.com/erikdarlingdata/claude-plugins/tar.gz/main",
+      "id": "sqlserver-query-plans",
+      "name": "SQL Server Query Plans",
+      "description": "Reads SQL Server execution plans the way an experienced tuner would, from Erik Darling's own query tuning knowledge: what is actually slow and why, not which operators look expensive. Point the agent at a .sqlplan or .xml file and ask what is wrong.",
+      "author": "Erik Darling",
+      "repo": "https://github.com/erikdarlingdata/claude-plugins",
+      "ref": "main",
+      "subdirs": [
+        "plugins/sqlserver-query-plans/skills"
+      ],
+      "image": "https://avatars.githubusercontent.com/u/2136037?s=128"
     }
   ]
 }

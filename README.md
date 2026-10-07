@@ -22,6 +22,13 @@ downloads the component from `dist/`, checking its hash.
 | git-context | Branch, changed files and recent commits beside each prompt | prompt-submit |
 | tool-log | One JSON line per tool call, in a file or to an endpoint | after-tool |
 
+## Skill packs
+
+`packs.json` lists Markdown skill collections from other repositories (Superpowers, Skills for Real
+Engineers, Agent Skills, Karpathy Guidelines, SQL Server Query Plans). Drift installs one by
+unpacking the pinned ref's archive into `~/.config/drift/skills/<id>`, where it reads skills from
+already; a pack runs no code. They appear in the registry with `kind: "skills"`.
+
 Every plugin's config is in its `plugin.json`; Drift's install sheet offers the same fields and
 writes them to your `~/.config/drift/drift.json` entry.
 

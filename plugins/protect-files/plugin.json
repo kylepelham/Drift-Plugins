@@ -1,7 +1,7 @@
 {
   "id": "protect-files",
   "name": "Protect files",
-  "description": "Keeps the agent out of files a person should edit: .env and other secrets, keys and certificates, lockfiles, and the .git directory. Edits, writes, patches and shell lines that name a protected path are refused with the reason.",
+  "description": "Keeps the agent out of files a person should edit: .env and other secrets, keys and certificates, lockfiles, and the .git directory. Edits, writes and patches to a protected path are refused with the reason, and so is a shell line that would change one (a redirection, rm, mv, sed, git and the like); reading it is fine.",
   "category": "safety",
   "icon": "lock",
   "hooks": ["before-tool"],

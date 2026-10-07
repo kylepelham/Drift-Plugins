@@ -44,6 +44,22 @@ function workspaceVersion() {
   return /\[workspace\.package\][^[]*?version\s*=\s*"([^"]+)"/.exec(text)?.[1] ?? "0.0.0"
 }
 
-const registry = { version: 1, wit: "drift:plugin@0.2.0", plugins }
+// Skill packs: Markdown skills from other repositories, installed by extracting an archive of a pinned ref.
+const packs = JSON.parse(readFileSync(join(root, "packs.json"), "utf8")).packs.map((pack: Record<string, unknown>) => {
+  const repo = String(pack.repo).replace(/\/$/, "")
+  const [owner, name] = repo.replace("https://github.com/", "").split("/")
+  return {
+    kind: "skills",
+    category: "skills",
+    hooks: [],
+    config: [],
+    version: String(pack.ref),
+    source: repo,
+    archive: `https://codeload.github.com/${owner}/${name}/tar.gz/${pack.ref}`,
+    ...pack,
+  }
+})
+
+const registry = { version: 1, wit: "drift:plugin@0.2.0", plugins: [...plugins.map((plugin) => ({ kind: "wasm", ...plugin })), ...packs] }
 await Bun.write(join(root, "registry.json"), JSON.stringify(registry, null, 2) + "\n")
 console.log(`registry.json: ${plugins.length} plugins`)
