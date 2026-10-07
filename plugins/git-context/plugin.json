@@ -1,0 +1,24 @@
+{
+  "id": "git-context",
+  "name": "Git context",
+  "description": "Puts the repository's state beside each prompt: the branch, which files are changed, and the last five commits, so the model knows where it is without running git first.",
+  "category": "context",
+  "icon": "branch",
+  "hooks": [
+    "prompt-submit"
+  ],
+  "config": [
+    {
+      "key": "status",
+      "label": "Include changed files",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "log",
+      "label": "Include recent commits",
+      "type": "boolean",
+      "default": true
+    }
+  ]
+}

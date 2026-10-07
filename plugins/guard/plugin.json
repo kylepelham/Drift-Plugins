@@ -1,0 +1,12 @@
+{
+  "id": "guard",
+  "name": "Guard",
+  "description": "Refuses shell commands that rewrite history (force pushes, hard resets, clean), notes failed commands under their output, and runs your tests when a reply ends with @guard test, keeping the turn going until they pass.",
+  "category": "safety",
+  "icon": "shield",
+  "hooks": ["before-tool", "after-tool", "turn-end", "compaction"],
+  "config": [
+    { "key": "test", "label": "Test command", "type": "list", "default": ["cargo", "test"], "description": "Program and arguments, run in the workspace when a reply says @guard test." },
+    { "key": "deny", "label": "Refused commands", "type": "list", "default": ["git push --force", "git push -f", "git reset --hard", "git clean -f", "git checkout --", "git branch -D"], "description": "A shell line containing any of these is refused." }
+  ]
+}

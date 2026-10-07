@@ -1,0 +1,387 @@
+{
+  "version": 1,
+  "wit": "drift:plugin@0.2.0",
+  "plugins": [
+    {
+      "id": "auto-format",
+      "name": "Auto-format",
+      "description": "Runs a formatter over every file the agent writes, chosen by extension: prettier, rustfmt, black and gofmt out of the box, or your own commands. The card says which files were formatted.",
+      "category": "quality",
+      "icon": "sparkles",
+      "hooks": [
+        "after-tool"
+      ],
+      "config": [
+        {
+          "key": "formatters",
+          "label": "Formatters by extension",
+          "type": "json",
+          "default": {
+            "js,jsx,ts,tsx,json,css,md,yaml,yml": [
+              "prettier",
+              "--write",
+              "$FILE"
+            ],
+            "rs": [
+              "rustfmt",
+              "--edition",
+              "2021",
+              "$FILE"
+            ],
+            "py": [
+              "black",
+              "-q",
+              "$FILE"
+            ],
+            "go": [
+              "gofmt",
+              "-w",
+              "$FILE"
+            ]
+          },
+          "description": "Comma-separated extensions to a command; $FILE is the written file."
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/auto-format",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/auto-format.wasm",
+      "sha256": "0c3378f2a318527aaaea89302de47242d6a6e6757b2cd263c631fd027b25977d",
+      "size": 106756
+    },
+    {
+      "id": "git-autocommit",
+      "name": "Git auto-commit",
+      "description": "Commits after every file the agent writes, so each change is its own revertible step and nothing is lost if a turn goes wrong. Only the written files are staged unless you choose to stage everything.",
+      "category": "workflow",
+      "icon": "commit",
+      "hooks": [
+        "after-tool"
+      ],
+      "config": [
+        {
+          "key": "prefix",
+          "label": "Message prefix",
+          "type": "string",
+          "default": "drift:",
+          "description": "Commit messages read \"<prefix> <tool> <files>\"."
+        },
+        {
+          "key": "stageAll",
+          "label": "Stage every change",
+          "type": "boolean",
+          "default": false,
+          "description": "Stage the whole tree rather than only the written files."
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/git-autocommit",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/git-autocommit.wasm",
+      "sha256": "6b7b995c8311bc040c7b08e4212f249b131b5f899c7b5fa16157722948b05b80",
+      "size": 78466
+    },
+    {
+      "id": "git-context",
+      "name": "Git context",
+      "description": "Puts the repository's state beside each prompt: the branch, which files are changed, and the last five commits, so the model knows where it is without running git first.",
+      "category": "context",
+      "icon": "branch",
+      "hooks": [
+        "prompt-submit"
+      ],
+      "config": [
+        {
+          "key": "status",
+          "label": "Include changed files",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "log",
+          "label": "Include recent commits",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/git-context",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/git-context.wasm",
+      "sha256": "39aaf8e840db36278a877fdcced9cb5638048f0d48b68f2ad92ee8d965fe5c56",
+      "size": 75520
+    },
+    {
+      "id": "guard",
+      "name": "Guard",
+      "description": "Refuses shell commands that rewrite history (force pushes, hard resets, clean), notes failed commands under their output, and runs your tests when a reply ends with @guard test, keeping the turn going until they pass.",
+      "category": "safety",
+      "icon": "shield",
+      "hooks": [
+        "before-tool",
+        "after-tool",
+        "turn-end",
+        "compaction"
+      ],
+      "config": [
+        {
+          "key": "test",
+          "label": "Test command",
+          "type": "list",
+          "default": [
+            "cargo",
+            "test"
+          ],
+          "description": "Program and arguments, run in the workspace when a reply says @guard test."
+        },
+        {
+          "key": "deny",
+          "label": "Refused commands",
+          "type": "list",
+          "default": [
+            "git push --force",
+            "git push -f",
+            "git reset --hard",
+            "git clean -f",
+            "git checkout --",
+            "git branch -D"
+          ],
+          "description": "A shell line containing any of these is refused."
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/guard",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/guard.wasm",
+      "sha256": "d1194ab4e5c9aa76a030ff4dd3b84774b3d87e924b2f4acb6b6d33a3adbc4414",
+      "size": 80619
+    },
+    {
+      "id": "lint-check",
+      "name": "Lint check",
+      "description": "Runs a type checker or linter after the agent writes a matching file and puts the problems in front of the model with the tool's output, so it fixes them in the same turn instead of leaving them for you.",
+      "category": "quality",
+      "icon": "check",
+      "hooks": [
+        "after-tool"
+      ],
+      "config": [
+        {
+          "key": "checks",
+          "label": "Checks",
+          "type": "json",
+          "default": [
+            {
+              "extensions": [
+                "ts",
+                "tsx"
+              ],
+              "run": [
+                "bunx",
+                "tsc",
+                "--noEmit",
+                "-p",
+                "."
+              ]
+            },
+            {
+              "extensions": [
+                "rs"
+              ],
+              "run": [
+                "cargo",
+                "check",
+                "--quiet",
+                "--message-format",
+                "short"
+              ]
+            },
+            {
+              "extensions": [
+                "py"
+              ],
+              "run": [
+                "ruff",
+                "check",
+                "$FILE"
+              ]
+            },
+            {
+              "extensions": [
+                "go"
+              ],
+              "run": [
+                "go",
+                "vet",
+                "./..."
+              ]
+            }
+          ],
+          "description": "Each check names the extensions it runs for and the command; $FILE is the written file."
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/lint-check",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/lint-check.wasm",
+      "sha256": "13426d6f4420de66816ad0bb0b12c018d36faa661d9f58044308bcefd8961a4e",
+      "size": 112680
+    },
+    {
+      "id": "notify",
+      "name": "Notify",
+      "description": "Tells you when Drift needs you or has finished: a notice in the app when a call waits for your approval, and optionally a webhook (Slack, Discord, anything that takes JSON) when a turn ends, so you hear about it away from the screen.",
+      "category": "notify",
+      "icon": "bell",
+      "hooks": [
+        "turn-end",
+        "permission",
+        "session"
+      ],
+      "config": [
+        {
+          "key": "webhook",
+          "label": "Webhook URL",
+          "type": "string",
+          "default": "",
+          "description": "Posted JSON with text and content fields; leave empty for in-app notices only."
+        },
+        {
+          "key": "onReply",
+          "label": "Post when a turn ends",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "onPermission",
+          "label": "Notice when approval is needed",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "key": "onIdle",
+          "label": "Notice when a thread finishes",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/notify",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/notify.wasm",
+      "sha256": "a56a37234edd39f031a3c7315fa1a77327b1755d460dc2d977f112e89dec036a",
+      "size": 102653
+    },
+    {
+      "id": "protect-files",
+      "name": "Protect files",
+      "description": "Keeps the agent out of files a person should edit: .env and other secrets, keys and certificates, lockfiles, and the .git directory. Edits, writes, patches and shell lines that name a protected path are refused with the reason.",
+      "category": "safety",
+      "icon": "lock",
+      "hooks": [
+        "before-tool"
+      ],
+      "config": [
+        {
+          "key": "patterns",
+          "label": "Protected paths",
+          "type": "list",
+          "default": [
+            ".env",
+            ".env.*",
+            "*.pem",
+            "*.key",
+            "*.p12",
+            "*.pfx",
+            "id_rsa*",
+            "package-lock.json",
+            "pnpm-lock.yaml",
+            "yarn.lock",
+            "bun.lock",
+            "bun.lockb",
+            "Cargo.lock",
+            "poetry.lock",
+            "Gemfile.lock",
+            ".git/**"
+          ],
+          "description": "Globs: * within a folder, ** across folders, ? one character. A pattern without a slash matches the file name anywhere."
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/protect-files",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/protect-files.wasm",
+      "sha256": "65adc4b438a3b5ff167e3b1ecb8f4aee6fa2e874e3c1061ed06d1ef7a3134a4e",
+      "size": 84274
+    },
+    {
+      "id": "test-gate",
+      "name": "Test gate",
+      "description": "Runs your test suite before any turn that changed files is allowed to end. Failures go back to the model as a prompt and it keeps working until they pass; a passing run leaves a line under the reply.",
+      "category": "quality",
+      "icon": "flask",
+      "hooks": [
+        "after-tool",
+        "turn-end",
+        "session"
+      ],
+      "config": [
+        {
+          "key": "test",
+          "label": "Test command",
+          "type": "list",
+          "default": [
+            "cargo",
+            "test"
+          ],
+          "description": "Program and arguments, run in the workspace."
+        },
+        {
+          "key": "timeoutMs",
+          "label": "Time limit (ms)",
+          "type": "number",
+          "default": 300000,
+          "description": "The run is stopped past this."
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/test-gate",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/test-gate.wasm",
+      "sha256": "ed6aee698d6a7fa144195188c6b46a3915e8a76697d75f8eae37a2b484abd722",
+      "size": 78175
+    },
+    {
+      "id": "tool-log",
+      "name": "Tool log",
+      "description": "Keeps a record of every tool call the agent makes: one JSON line per call in a file under the workspace, bounded so it never grows without limit, and optionally posted to an endpoint of yours.",
+      "category": "workflow",
+      "icon": "list",
+      "hooks": [
+        "after-tool"
+      ],
+      "config": [
+        {
+          "key": "file",
+          "label": "Log file",
+          "type": "string",
+          "default": ".drift/tool-log.jsonl",
+          "description": "Under the workspace. Set to false to keep no file."
+        },
+        {
+          "key": "endpoint",
+          "label": "Endpoint",
+          "type": "string",
+          "default": "",
+          "description": "Each call is POSTed here as JSON; leave empty for none."
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/tool-log",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/tool-log.wasm",
+      "sha256": "2e07967465db2b892a93e57572aa5705a50f8c8706175989e02d076b4fe13a00",
+      "size": 104049
+    }
+  ]
+}

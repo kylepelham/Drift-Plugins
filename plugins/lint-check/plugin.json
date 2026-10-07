@@ -1,0 +1,65 @@
+{
+  "id": "lint-check",
+  "name": "Lint check",
+  "description": "Runs a type checker or linter after the agent writes a matching file and puts the problems in front of the model with the tool's output, so it fixes them in the same turn instead of leaving them for you.",
+  "category": "quality",
+  "icon": "check",
+  "hooks": [
+    "after-tool"
+  ],
+  "config": [
+    {
+      "key": "checks",
+      "label": "Checks",
+      "type": "json",
+      "default": [
+        {
+          "extensions": [
+            "ts",
+            "tsx"
+          ],
+          "run": [
+            "bunx",
+            "tsc",
+            "--noEmit",
+            "-p",
+            "."
+          ]
+        },
+        {
+          "extensions": [
+            "rs"
+          ],
+          "run": [
+            "cargo",
+            "check",
+            "--quiet",
+            "--message-format",
+            "short"
+          ]
+        },
+        {
+          "extensions": [
+            "py"
+          ],
+          "run": [
+            "ruff",
+            "check",
+            "$FILE"
+          ]
+        },
+        {
+          "extensions": [
+            "go"
+          ],
+          "run": [
+            "go",
+            "vet",
+            "./..."
+          ]
+        }
+      ],
+      "description": "Each check names the extensions it runs for and the command; $FILE is the written file."
+    }
+  ]
+}

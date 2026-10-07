@@ -1,0 +1,31 @@
+{
+  "id": "test-gate",
+  "name": "Test gate",
+  "description": "Runs your test suite before any turn that changed files is allowed to end. Failures go back to the model as a prompt and it keeps working until they pass; a passing run leaves a line under the reply.",
+  "category": "quality",
+  "icon": "flask",
+  "hooks": [
+    "after-tool",
+    "turn-end",
+    "session"
+  ],
+  "config": [
+    {
+      "key": "test",
+      "label": "Test command",
+      "type": "list",
+      "default": [
+        "cargo",
+        "test"
+      ],
+      "description": "Program and arguments, run in the workspace."
+    },
+    {
+      "key": "timeoutMs",
+      "label": "Time limit (ms)",
+      "type": "number",
+      "default": 300000,
+      "description": "The run is stopped past this."
+    }
+  ]
+}

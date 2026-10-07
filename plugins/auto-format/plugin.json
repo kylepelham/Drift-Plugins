@@ -1,0 +1,41 @@
+{
+  "id": "auto-format",
+  "name": "Auto-format",
+  "description": "Runs a formatter over every file the agent writes, chosen by extension: prettier, rustfmt, black and gofmt out of the box, or your own commands. The card says which files were formatted.",
+  "category": "quality",
+  "icon": "sparkles",
+  "hooks": [
+    "after-tool"
+  ],
+  "config": [
+    {
+      "key": "formatters",
+      "label": "Formatters by extension",
+      "type": "json",
+      "default": {
+        "js,jsx,ts,tsx,json,css,md,yaml,yml": [
+          "prettier",
+          "--write",
+          "$FILE"
+        ],
+        "rs": [
+          "rustfmt",
+          "--edition",
+          "2021",
+          "$FILE"
+        ],
+        "py": [
+          "black",
+          "-q",
+          "$FILE"
+        ],
+        "go": [
+          "gofmt",
+          "-w",
+          "$FILE"
+        ]
+      },
+      "description": "Comma-separated extensions to a command; $FILE is the written file."
+    }
+  ]
+}

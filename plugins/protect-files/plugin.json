@@ -1,0 +1,11 @@
+{
+  "id": "protect-files",
+  "name": "Protect files",
+  "description": "Keeps the agent out of files a person should edit: .env and other secrets, keys and certificates, lockfiles, and the .git directory. Edits, writes, patches and shell lines that name a protected path are refused with the reason.",
+  "category": "safety",
+  "icon": "lock",
+  "hooks": ["before-tool"],
+  "config": [
+    { "key": "patterns", "label": "Protected paths", "type": "list", "default": [".env", ".env.*", "*.pem", "*.key", "*.p12", "*.pfx", "id_rsa*", "package-lock.json", "pnpm-lock.yaml", "yarn.lock", "bun.lock", "bun.lockb", "Cargo.lock", "poetry.lock", "Gemfile.lock", ".git/**"], "description": "Globs: * within a folder, ** across folders, ? one character. A pattern without a slash matches the file name anywhere." }
+  ]
+}

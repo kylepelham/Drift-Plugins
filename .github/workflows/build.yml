@@ -1,0 +1,21 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-wasip2
+      - uses: Swatinem/rust-cache@v2
+      - uses: oven-sh/setup-bun@v2
+      - name: Build every plugin and the registry
+        run: bun scripts/build.ts
+      - name: Every listed plugin has a component
+        run: bun -e 'const r = await Bun.file("registry.json").json(); for (const p of r.plugins) if (!(await Bun.file("dist/" + p.id + ".wasm").exists())) throw new Error(p.id)'

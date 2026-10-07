@@ -1,0 +1,26 @@
+{
+  "id": "git-autocommit",
+  "name": "Git auto-commit",
+  "description": "Commits after every file the agent writes, so each change is its own revertible step and nothing is lost if a turn goes wrong. Only the written files are staged unless you choose to stage everything.",
+  "category": "workflow",
+  "icon": "commit",
+  "hooks": [
+    "after-tool"
+  ],
+  "config": [
+    {
+      "key": "prefix",
+      "label": "Message prefix",
+      "type": "string",
+      "default": "drift:",
+      "description": "Commit messages read \"<prefix> <tool> <files>\"."
+    },
+    {
+      "key": "stageAll",
+      "label": "Stage every change",
+      "type": "boolean",
+      "default": false,
+      "description": "Stage the whole tree rather than only the written files."
+    }
+  ]
+}

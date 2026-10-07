@@ -1,0 +1,39 @@
+{
+  "id": "notify",
+  "name": "Notify",
+  "description": "Tells you when Drift needs you or has finished: a notice in the app when a call waits for your approval, and optionally a webhook (Slack, Discord, anything that takes JSON) when a turn ends, so you hear about it away from the screen.",
+  "category": "notify",
+  "icon": "bell",
+  "hooks": [
+    "turn-end",
+    "permission",
+    "session"
+  ],
+  "config": [
+    {
+      "key": "webhook",
+      "label": "Webhook URL",
+      "type": "string",
+      "default": "",
+      "description": "Posted JSON with text and content fields; leave empty for in-app notices only."
+    },
+    {
+      "key": "onReply",
+      "label": "Post when a turn ends",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "onPermission",
+      "label": "Notice when approval is needed",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "key": "onIdle",
+      "label": "Notice when a thread finishes",
+      "type": "boolean",
+      "default": false
+    }
+  ]
+}
