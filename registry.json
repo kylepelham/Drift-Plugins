@@ -337,6 +337,34 @@
     },
     {
       "kind": "wasm",
+      "id": "slang",
+      "name": "Slang",
+      "description": "The Slang shading language: Khronos' grammar highlights .slang and .slangh files and slang code fences, and slangd, the language server the Slang releases and the Vulkan SDK ship, reports the errors each edit leaves back to the model.",
+      "category": "languages",
+      "icon": "code",
+      "hooks": [
+        "grammars",
+        "language-servers"
+      ],
+      "config": [
+        {
+          "key": "server",
+          "label": "Language server",
+          "type": "string",
+          "default": "slangd",
+          "description": "The command that starts slangd, with its arguments; empty turns it off. Found on PATH unless it is a full path."
+        }
+      ],
+      "version": "0.1.0",
+      "author": "Drift",
+      "source": "https://github.com/kylepelham/Drift-Plugins/tree/main/plugins/slang",
+      "image": "https://cdn.jsdelivr.net/gh/kylepelham/Drift-Plugins@main/plugins/slang/icon.svg",
+      "download": "https://raw.githubusercontent.com/kylepelham/Drift-Plugins/main/dist/slang.wasm",
+      "sha256": "0b81800d2eaa69180bee0e88d34b3efcb1604086e7d4ee68e1a134d46d10c6da",
+      "size": 162849
+    },
+    {
+      "kind": "wasm",
       "id": "test-gate",
       "name": "Test gate",
       "description": "Runs your test suite before any turn that changed files is allowed to end. Failures go back to the model as a prompt and it keeps working until they pass; a passing run leaves a line under the reply.",

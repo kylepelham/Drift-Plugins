@@ -21,6 +21,7 @@ downloads the component from `dist/`, checking its hash.
 | git-autocommit | Commits after every written file | after-tool |
 | git-context | Branch, changed files and recent commits beside each prompt | prompt-submit |
 | tool-log | One JSON line per tool call, in a file or to an endpoint | after-tool |
+| slang | Highlights the Slang shading language and starts `slangd`, so edits come back with its errors | grammars, language-servers |
 
 ## Skill packs
 
@@ -37,9 +38,18 @@ writes them to your `~/.config/drift/drift.json` entry.
 
 A plugin implements the `plugin` world: `name`, `before-tool`, `after-tool`, `prompt-submit`,
 `turn-end`, `permission`, `compaction` and `session`, each returning the do-nothing answer when it
-does not care. Copy any directory under `plugins/`, keep `plugin.json` honest, and build with
+does not care. A plugin that adds a language builds for the `languages` world instead, which adds
+`settings`, `language-servers` and `grammars`; `plugins/slang` is one. Copy any directory under `plugins/`, keep `plugin.json` honest, and build with
 `cargo build --release --target wasm32-wasip2`. Any language with a component toolchain works the
 same way: the contract is the WIT file, not Rust.
 
 `bun scripts/build.ts` builds everything, copies the components to `dist/` and rewrites
 `registry.json` with their hashes.
+
+## Slang
+
+`plugins/slang` highlights `.slang` and `.slangh` files and `slang` code fences with the grammar from Khronos'
+[Slang VS Code extension](https://github.com/shader-slang/slang-vscode-extension) (Apache-2.0 WITH LLVM-exception,
+copied unchanged; see `plugins/slang/GRAMMAR-LICENSE.txt`), and starts `slangd`, which the Slang releases and the
+Vulkan SDK ship, so every edit to a Slang file comes back with the errors it left. Set `server` to another command
+or a full path, or empty to keep only the highlighting. It needs a Drift with the `languages` world (2.4.2 or later).

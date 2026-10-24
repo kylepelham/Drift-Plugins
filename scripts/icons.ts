@@ -79,6 +79,12 @@ const icons: Record<string, string> = {
     <circle cx="18" cy="32" r="1.6" fill="#fff" stroke="none"/>
     <circle cx="18" cy="44" r="1.6" fill="#fff" stroke="none"/>`,
   ),
+  slang: tile(
+    "#34d399",
+    "#0f766e",
+    `    <path d="M21 22 11 32l10 10M43 22l10 10-10 10"/>
+    <path d="M32 22l8 18H24Z"/>`,
+  ),
 }
 
 for (const [id, svg] of Object.entries(icons)) {

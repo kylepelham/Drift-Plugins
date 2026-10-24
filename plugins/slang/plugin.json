@@ -1,0 +1,20 @@
+{
+  "id": "slang",
+  "name": "Slang",
+  "description": "The Slang shading language: Khronos' grammar highlights .slang and .slangh files and slang code fences, and slangd, the language server the Slang releases and the Vulkan SDK ship, reports the errors each edit leaves back to the model.",
+  "category": "languages",
+  "icon": "code",
+  "hooks": [
+    "grammars",
+    "language-servers"
+  ],
+  "config": [
+    {
+      "key": "server",
+      "label": "Language server",
+      "type": "string",
+      "default": "slangd",
+      "description": "The command that starts slangd, with its arguments; empty turns it off. Found on PATH unless it is a full path."
+    }
+  ]
+}

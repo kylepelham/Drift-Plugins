@@ -227,6 +227,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "slang"
+version = "0.1.0"
+dependencies = [
+ "serde_json",
+ "wit-bindgen",
+]
+
+[[package]]
 name = "syn"
 version = "3.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
