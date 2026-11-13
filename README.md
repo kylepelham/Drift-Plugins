@@ -21,7 +21,7 @@ downloads the component from `dist/`, checking its hash.
 | git-autocommit | Commits after every written file | after-tool |
 | git-context | Branch, changed files and recent commits beside each prompt | prompt-submit |
 | tool-log | One JSON line per tool call, in a file or to an endpoint | after-tool |
-| slang | Highlights the Slang shading language and starts `slangd`, so edits come back with its errors | grammars, language-servers |
+| slang | Highlights the Slang shading language; Drift starts `slangd` itself when it is installed | grammars |
 
 ## Skill packs
 
