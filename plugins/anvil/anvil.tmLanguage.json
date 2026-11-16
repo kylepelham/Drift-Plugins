@@ -1,0 +1,150 @@
+{
+  "name": "Anvil TOML",
+  "scopeName": "source.toml.anvil",
+  "comment": "TOML for anvil.toml and tests.toml. Anvil's own meaning (targets, conditions, placeholders) is coloured by the language server's semantic tokens.",
+  "patterns": [
+    {
+      "include": "#comment"
+    },
+    {
+      "include": "#table"
+    },
+    {
+      "include": "#entry"
+    },
+    {
+      "include": "#value"
+    }
+  ],
+  "repository": {
+    "comment": {
+      "match": "(#).*$",
+      "name": "comment.line.number-sign.toml",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.comment.toml"
+        }
+      }
+    },
+    "table": {
+      "match": "^\\s*(\\[\\[?)\\s*((?:[A-Za-z0-9_-]+|\"(?:[^\"\\\\]|\\\\.)*\"|'[^']*')(?:\\s*\\.\\s*(?:[A-Za-z0-9_-]+|\"(?:[^\"\\\\]|\\\\.)*\"|'[^']*'))*)\\s*(\\]\\]?)",
+      "captures": {
+        "1": {
+          "name": "punctuation.definition.table.toml"
+        },
+        "2": {
+          "name": "support.type.property-name.table.toml",
+          "patterns": [
+            {
+              "include": "#keyParts"
+            }
+          ]
+        },
+        "3": {
+          "name": "punctuation.definition.table.toml"
+        }
+      }
+    },
+    "entry": {
+      "match": "((?:[A-Za-z0-9_-]+|\"(?:[^\"\\\\]|\\\\.)*\"|'[^']*')(?:\\s*\\.\\s*(?:[A-Za-z0-9_-]+|\"(?:[^\"\\\\]|\\\\.)*\"|'[^']*'))*)\\s*(=)",
+      "captures": {
+        "1": {
+          "name": "support.type.property-name.toml",
+          "patterns": [
+            {
+              "include": "#keyParts"
+            }
+          ]
+        },
+        "2": {
+          "name": "punctuation.eq.toml"
+        }
+      }
+    },
+    "keyParts": {
+      "patterns": [
+        {
+          "match": "\"(?:[^\"\\\\]|\\\\.)*\"",
+          "name": "string.quoted.double.key.toml"
+        },
+        {
+          "match": "'[^']*'",
+          "name": "string.quoted.single.key.toml"
+        },
+        {
+          "match": "\\.",
+          "name": "punctuation.separator.dot.toml"
+        }
+      ]
+    },
+    "value": {
+      "patterns": [
+        {
+          "include": "#comment"
+        },
+        {
+          "begin": "\"\"\"",
+          "end": "\"\"\"",
+          "name": "string.quoted.triple.basic.block.toml",
+          "patterns": [
+            {
+              "include": "#escape"
+            }
+          ]
+        },
+        {
+          "begin": "'''",
+          "end": "'''",
+          "name": "string.quoted.triple.literal.block.toml"
+        },
+        {
+          "begin": "\"",
+          "end": "\"|$",
+          "name": "string.quoted.double.basic.line.toml",
+          "patterns": [
+            {
+              "include": "#escape"
+            }
+          ]
+        },
+        {
+          "begin": "'",
+          "end": "'|$",
+          "name": "string.quoted.single.literal.line.toml"
+        },
+        {
+          "match": "(?<![\\w.:-])\\d{4}-\\d{2}-\\d{2}(?:[Tt ]\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?:[Zz]|[+-]\\d{2}:\\d{2})?)?(?![\\w.:-])",
+          "name": "constant.other.time.datetime.toml"
+        },
+        {
+          "match": "(?<![\\w.:-])\\d{2}:\\d{2}:\\d{2}(?:\\.\\d+)?(?![\\w.:-])",
+          "name": "constant.other.time.toml"
+        },
+        {
+          "match": "(?<![\\w.-])[+-]?(?:0x[0-9A-Fa-f_]+|0o[0-7_]+|0b[01_]+|inf|nan|\\d[\\d_]*(?:\\.\\d[\\d_]*)?(?:[eE][+-]?\\d[\\d_]*)?)(?![\\w.-])",
+          "name": "constant.numeric.toml"
+        },
+        {
+          "match": "(?<![\\w-])(?:true|false)(?![\\w-])",
+          "name": "constant.language.boolean.toml"
+        },
+        {
+          "match": "[\\[\\]]",
+          "name": "punctuation.definition.array.toml"
+        },
+        {
+          "match": "[{}]",
+          "name": "punctuation.definition.inline-table.toml"
+        },
+        {
+          "match": ",",
+          "name": "punctuation.separator.toml"
+        }
+      ]
+    },
+    "escape": {
+      "match": "\\\\(?:[btnfr\"\\\\]|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})",
+      "name": "constant.character.escape.toml"
+    }
+  }
+}

@@ -21,6 +21,7 @@ downloads the component from `dist/`, checking its hash.
 | git-autocommit | Commits after every written file | after-tool |
 | git-context | Branch, changed files and recent commits beside each prompt | prompt-submit |
 | tool-log | One JSON line per tool call, in a file or to an endpoint | after-tool |
+| anvil | Highlights Anvil's `anvil.toml` and `tests.toml` and starts `anvil lsp`, so edits to them come back with its errors | grammars, language-servers |
 
 ## Skill packs
 
@@ -38,10 +39,18 @@ writes them to your `~/.config/drift/drift.json` entry.
 A plugin implements the `plugin` world: `name`, `before-tool`, `after-tool`, `prompt-submit`,
 `turn-end`, `permission`, `compaction` and `session`, each returning the do-nothing answer when it
 does not care. A plugin that adds a language builds for the `languages` world instead, which adds
-`settings`, `language-servers` and `grammars`. Each language server it declares is used as shipped and says how
+`settings`, `language-servers` and `grammars`; `plugins/anvil` is one. Each language server it declares is used as shipped and says how
 to get it: install commands Drift runs from Settings > Language servers, else a guide, else why neither applies. Copy any directory under `plugins/`, keep `plugin.json` honest, and build with
 `cargo build --release --target wasm32-wasip2`. Any language with a component toolchain works the
 same way: the contract is the WIT file, not Rust.
 
 `bun scripts/build.ts` builds everything, copies the components to `dist/` and rewrites
 `registry.json` with their hashes.
+
+## Anvil
+
+`plugins/anvil` highlights `anvil.toml` and `tests.toml`, and `anvil` code fences, with the grammar from Anvil's
+VS Code extension, and starts `anvil lsp`, which checks each edit to them as a build would: unknown keys (with
+did-you-mean), wrong value types, targets, dependencies, conditions and the rest. It needs the `anvil` program on
+PATH, which Anvil's own `cargo install --path .` puts there, and a Drift whose language servers say how to install
+them (2.7.0 or later). It has no settings; turn the server off in Settings > Language servers.

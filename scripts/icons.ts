@@ -71,6 +71,12 @@ const icons: Record<string, string> = {
     <circle cx="42" cy="26" r="4.5"/>
     <path d="M22 22.5v19M42 30.5c0 7-8 7-14 10"/>`,
   ),
+  anvil: tile(
+    "#f59e0b",
+    "#9a3412",
+    `    <path d="M14 22h30c0 6 4 9 8 9-4 2-8 5-10 9H24c-2-5-6-8-10-9Z"/>
+    <path d="M24 40l-4 8h24l-4-8"/>`,
+  ),
   "tool-log": tile(
     "#64748b",
     "#1e293b",

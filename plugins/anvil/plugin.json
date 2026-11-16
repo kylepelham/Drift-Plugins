@@ -1,0 +1,12 @@
+{
+  "id": "anvil",
+  "name": "Anvil",
+  "description": "Anvil manifests: Anvil's own grammar highlights anvil.toml and tests.toml, and anvil lsp checks each edit to them as a build would (unknown keys, targets, dependencies, conditions), so the model sees the mistake before anything builds. Needs the anvil program on PATH.",
+  "category": "languages",
+  "icon": "code",
+  "hooks": [
+    "grammars",
+    "language-servers"
+  ],
+  "config": []
+}
